@@ -1,11 +1,19 @@
 import { combineReducers } from 'redux';
-import { connectRouter } from 'connected-react-router';
-import demoReducer from '../reducers/demoReducer';
+import { routerReducer } from 'react-router-redux';
+import * as fromCharacters from './characters';
+import { createSelector } from 'reselect'
 
-const rootReducer = (history) =>
-  combineReducers({
-    router: connectRouter(history),
-    example: demoReducer,
-  });
+/**
+ * root reduces
+ */
+export default combineReducers({
+  characters: fromCharacters.reducer,
+  routing: routerReducer
+});
 
-export default rootReducer;
+
+/**
+ * selectors
+ */
+export const getCharacters = state => state.characters;
+export const getCharactersArray = createSelector(getCharacters, fromCharacters.getCharactersArray);
